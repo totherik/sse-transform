@@ -6,33 +6,35 @@ var sse = require('../index');
 
 
 function transform(options, messages, callback) {
-    var idx, dest, trans, src;
+    var idx, src, dest;
 
     idx = 0;
+
+    src = sse(options);
+    src.on('error', function () {
+        // Just prevent throw.
+    });
+    src.on('end', function () {
+        callback(null);
+    });
+    src.on('unpipe', function (src) {
+        if (src && src.readable) {
+            src.pipe(src);
+        }
+    });
+
+
     dest = through(function (chunk, encoding, done) {
         callback(chunk.toString('utf8'), idx);
         idx += 1;
         done();
     });
+    
 
-    src = through(options);
-    src.on('end', function () {
-        callback(null);
-    });
-
-    trans = sse(options);
-    trans.on('unpipe', function (src) {
-        if (src && src.readable) {
-            src.pipe(trans);
-        }
-    });
-
-    src.pipe(trans).pipe(dest);
-
+    src.pipe(dest);
     messages.forEach(function (message) {
         src.write(message);
     });
-
     src.end();
 }
 
