@@ -33,7 +33,7 @@ xform.write('{"event":"myevent2","data":"moo\\nmar"}\r\n');
 xform.end();
 ```
 
-Output
+##### Output
 ```bash
 data:foo
 
@@ -80,7 +80,7 @@ xform.write({"event":"myevent2","data":"moo\nmar"});
 xform.end();
 ```
 
-Output
+##### Output
 ```bash
 data:foo
 
