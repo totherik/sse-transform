@@ -15,7 +15,7 @@ to be parsed an error event is emitted on the stream and no transform is perform
 ```javascript
 'use strict';
 
-var sse = require('../');
+var sse = require('sse-stream');
 var through = require('through2');
 
 
@@ -62,7 +62,7 @@ When value is not-string, JSON.stringify value.
 ```javascript
 'use strict';
 
-var sse = require('./');
+var sse = require('sse-stream');
 var through = require('through2');
 
 
