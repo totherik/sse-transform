@@ -38,8 +38,8 @@ xform.end();
 data:foo
 
 
-data:abc
 id:123
+data:abc
 
 
 event:myevent
@@ -87,8 +87,8 @@ xform.end();
 data:foo
 
 
-data:abc
 id:123
+data:abc
 
 
 event:myevent
