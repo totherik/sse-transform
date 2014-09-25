@@ -63,7 +63,7 @@ non-string-literal is encountered, the value is JSON.stringified during transfor
 ```javascript
 'use strict';
 
-var sse = require('sse-stream');
+var sse = require('./');
 var through = require('through2');
 
 
@@ -74,10 +74,11 @@ xform.pipe(through(function (chunk, encoding, done) {
     done();
 }));
 
-xform.write({"data":"foo"});
-xform.write({"id":123,"data":"abc"});
-xform.write({"event":"myevent","data":"foo\nbar"});
-xform.write({"event":"myevent2","data":"moo\nmar"});
+xform.write({ data: 'foo'});
+xform.write({ id:123, data: 'abc' });
+xform.write({ event: 'myevent', data: 'foo\nbar' });
+xform.write({ event: 'myevent2', data: 'moo\nmar' });
+xform.write({ event: 'myevent', data: { foo: true, bar: 123, baz: 'foo\nbar' }});
 xform.end();
 ```
 
