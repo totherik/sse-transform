@@ -1,12 +1,12 @@
 sse-stream
 ===========
 
-A transform stream ot converting JavaScript objects or JSON streams into
+A transform stream for converting JavaScript objects or JSON streams into
 [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Server-sent_events).
 
 #### Basic Usage
 
-``javascript
+```javascript
 'use strict';
 
 var sse = require('../');
