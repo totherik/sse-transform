@@ -55,8 +55,9 @@ data:mar
 ```
 
 #### Object Mode
-When value is string, split on newline and emit multiple `data:` entries.
-When value is not-string, JSON.stringify value.
+In object mode each field processed such that if it is a string, newline delimiting rules
+are applied and each newline results in a new field entry (see `data` fields below). If a
+non-string-literal is encountered, the value is JSON.stringified during transform.
 
 ##### Basic Usage
 ```javascript
@@ -97,6 +98,10 @@ data:bar
 event:myevent2
 data:moo
 data:mar
+
+
+event:myevent
+data:{"foo":true,"bar":123,"baz":"foo\nbar"}
 
 
 ```
