@@ -1,0 +1,28 @@
+{
+  "name": "sse-stream",
+  "version": "1.0.0",
+  "description": "A transform stream for converting JavaScript objects to Server-Sent Events.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "cover": "istanbul cover tape -- test/*.js"
+  },
+  "keywords": [
+    "server",
+    "sent",
+    "event",
+    "stream"
+  ],
+  "author": "Erik Toth <totherik@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "istanbul": "^0.3.2",
+    "tape": "^3.0.0"
+  },
+  "dependencies": {
+    "through2": "^0.6.2"
+  }
+}
