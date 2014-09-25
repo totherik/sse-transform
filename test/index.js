@@ -219,3 +219,22 @@ test('null and undefined', function (t) {
         t.ok(result.match(/\n\n$/));
     });
 });
+
+
+test('non-data newlines', function (t) {
+    var src = { event: 'foo\nbar', data: 'baz\nbam', id: 123 };
+
+    transform({ objectMode: true }, [ src ], function (result) {
+        if (result === null) {
+            t.end();
+            return;
+        }
+
+        t.ok(result);
+        t.ok(result.match(/event\:foo\n/));
+        t.ok(result.match(/id\:123\n/));
+        t.ok(result.match(/data\:baz\n/));
+        t.ok(result.match(/data\:bam\n/));
+        t.ok(result.match(/\n\n$/));
+    })
+});
