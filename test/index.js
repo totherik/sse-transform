@@ -168,7 +168,7 @@ test('Invalid JSON', function (t) {
                 break;
 
             default:
-                t.notOk(true);
+                t.fail();
         }
     });
 });
@@ -197,10 +197,9 @@ test('consecutive crlf', function (t) {
                 break;
 
             default:
-                t.fail(true);
+                t.fail();
         }
     });
-
 });
 
 
