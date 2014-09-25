@@ -197,7 +197,7 @@ test('consecutive crlf', function (t) {
                 break;
 
             default:
-                t.notOk(true);
+                t.fail(true);
         }
     });
 
@@ -237,4 +237,37 @@ test('non-data newlines', function (t) {
         t.ok(result.match(/data\:bam\n/));
         t.ok(result.match(/\n\n$/));
     })
+});
+
+
+test('comments', function (t) {
+    var src = [{ '$comment': 'foo\nbar', data: 'baz\nbam' }, { $comment: 'foo' }];
+
+    transform({ objectMode: true }, src, function (result, idx) {
+        if (result === null) {
+            t.end();
+            return;
+        }
+
+        t.ok(result);
+
+        switch (idx) {
+            case 0:
+                t.ok(result.match(/\:foo\n/));
+                t.ok(result.match(/\:bar\n/));
+                t.ok(result.match(/data\:baz\n/));
+                t.ok(result.match(/data\:bam\n/));
+                t.ok(result.match(/\n\n$/));
+                break;
+
+            case 1:
+                t.ok(result.match(/\:foo\n/));
+                t.ok(result.match(/\n\n$/));
+                break;
+
+            default:
+                t.fail();
+
+        }
+    });
 });
