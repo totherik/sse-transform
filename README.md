@@ -6,30 +6,6 @@ A transform stream for converting JavaScript objects or JSON streams into
 Only known [fields](https://developer.mozilla.org/en-US/docs/Server-sent_events/Using_server-sent_events#Fields)
 (including comments) are processed and all other fields are ignored.
 
-#### Fields
-The JSON or JavaScript object written to the stream can contain any properties, but only the following will be consumed
-by sse-stream, any other being ignored.
-
-##### event
-An `event` can contain any character besides carriage return or line feed. If the value contains a carriage return or
-line feed, the value is split on that character and the first segment used as the value.
-
-##### data
-The `data` field can include any string, including strings with carriage returns and/or line feeds. If the string contains
-newline characters, the string is split and multiple `data` fields are written per the SSE specification.
-
-##### id
-An `id` can contain any character besides carriage return or line feed. If the value contains a carriage return or
-line feed, the value is split on that character and the first segment used as the value.
-
-##### retry
-Per the Mozilla docs: "The reconnection time to use when attempting to send the event. This must be an integer,
-specifying the reconnection time in milliseconds. If a non-integer value is specified, the field is ignored."
-
-##### $comment
-Setting this property to include a comment in the event (any line starting with `:`). Comments can be used for keep-alives, etc.
-
-
 #### Default Mode
 In default mode JSON objects are delimited using CrLf (`\r\n`). Each encountered
 JSON object is parsed and transformed into SSE format. If a JSON object isn't able
@@ -130,3 +106,23 @@ data:{"foo":true,"bar":123,"baz":"foo\nbar"}
 
 
 ```
+
+
+#### Fields
+The JSON or JavaScript object written to the stream can contain any properties, but only the following will be consumed
+by sse-stream, any other being ignored.
+
+- `event` - An `event` can contain any character besides carriage return or line feed. If the value contains a carriage return or
+line feed, the value is split on that character and the first segment used as the value.
+
+- `data` - The `data` field can include any string, including strings with carriage returns and/or line feeds. If the string contains
+newline characters, the string is split and multiple `data` fields are written per the SSE specification.
+
+- `id` - An `id` can contain any character besides carriage return or line feed. If the value contains a carriage return or
+line feed, the value is split on that character and the first segment used as the value.
+
+- `retry` - Per the Mozilla docs: "The reconnection time to use when attempting to send the event. This must be an integer,
+specifying the reconnection time in milliseconds. If a non-integer value is specified, the field is ignored."
+
+- `$comment` - Setting this property to include a comment in the event (any line starting with `:`). Comments can be used for keep-alives, etc.
+
