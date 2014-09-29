@@ -8,6 +8,9 @@ module.exports = function sse(options) {
     var stream, buffer;
 
     options = options || {};
+    if (!options.hasOwnProperty('decodeStrings')) {
+        options.decodeStrings = false;
+    }
 
     if (options.objectMode) {
         stream = through(options, function (chunk, enc, next) {
@@ -18,17 +21,21 @@ module.exports = function sse(options) {
         return stream;
     }
 
-
     buffer = new Buffer(0);
     stream = through(options, function(chunk, enc, next) {
         var i, offset, data, parsed;
 
-        chunk = Buffer.concat([buffer, chunk]);
+        // Force utf8 string encoding
+        if (enc === 'buffer') {
+            chunk = chunk.toString('utf8');
+        }
+
+        chunk = buffer + chunk;
         offset = 0;
 
-        for (i = 0; i < chunk.length; i++) {
+        for (i = 0; i < chunk.length - 1; i++) {
             // `\r\n`
-            if (chunk[i] === 13 && chunk[i + 1] === 10) {
+            if (chunk.charCodeAt(i) === 13 && chunk.charCodeAt(i + 1) === 10) {
 
                 data = chunk.slice(offset, i);
                 parsed = Transform.parse(data);
@@ -46,10 +53,7 @@ module.exports = function sse(options) {
             }
         }
 
-        if (offset <= chunk.length) {
-            buffer = chunk.slice(offset);
-        }
-
+        buffer = chunk.slice(offset);
         next();
     });
 

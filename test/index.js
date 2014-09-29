@@ -17,7 +17,7 @@ function transform(options, messages, callback) {
     });
 
     src.on('end', function () {
-        callback(null);
+        callback(null, idx);
     });
 
     src.pipe(through(function (chunk, encoding, done) {
@@ -32,6 +32,21 @@ function transform(options, messages, callback) {
 
     src.end();
 }
+
+test('default options', function (t) {
+    var src = JSON.stringify({ $comment: 'keepalive'}) + '\r\n';
+
+    transform(undefined, [ src ], function (result) {
+        if (result === null) {
+            t.end();
+            return;
+        }
+
+        t.ok(result);
+        t.ok(result.match(/^\:keepalive\n/));
+        t.ok(result.match(/\n\n$/));
+    });
+});
 
 
 test('valid fields', function (t) {
@@ -220,6 +235,20 @@ test('null and undefined', function (t) {
 });
 
 
+test('empty string (falsy parsed JSON)', function (t) {
+    var src = JSON.stringify('') + '\r\n';
+
+    transform(undefined, [ src ], function (result) {
+        if (result === null) {
+            t.end();
+            return;
+        }
+
+        t.fail();
+    });
+});
+
+
 test('non-data newlines', function (t) {
     var src = { event: 'foo\nbar', data: 'baz\nbam', id: 123 };
 
@@ -268,5 +297,21 @@ test('comments', function (t) {
                 t.fail();
 
         }
+    });
+});
+
+
+test('encoding', function (t) {
+    var src = JSON.stringify({ data: 'foobar' }) + '\r\n';
+
+    transform({ decodeStrings: true }, [ src ], function (result) {
+        if (result === null) {
+            t.end();
+            return;
+        }
+
+        t.ok(result);
+        t.ok(result.match(/data\:foobar\n/));
+        t.ok(result.match(/\n\n$/));
     });
 });
