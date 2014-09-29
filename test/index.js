@@ -172,7 +172,7 @@ test('Invalid JSON', function (t) {
         t.ok(result.match(/\n\n$/));
 
         // NOTE: Even though there are 3 items, only 2 chunks arrive
-        // since the second is intentionally malformed.
+        // since the second is intentionally malformed. 
         switch (idx) {
             case 0:
                 t.ok(result.match(/data\:{}\n/));
