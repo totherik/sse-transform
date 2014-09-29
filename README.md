@@ -1,6 +1,8 @@
 sse-transform
 ===========
 
+[![Build Status](https://travis-ci.org/totherik/sse-transform.svg)](https://travis-ci.org/totherik/sse-transform)
+
 A transform stream for converting JavaScript objects or JSON streams into
 [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Server-sent_events).
 Only known [fields](https://developer.mozilla.org/en-US/docs/Server-sent_events/Using_server-sent_events#Fields)
