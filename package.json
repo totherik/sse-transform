@@ -1,5 +1,5 @@
 {
-  "name": "sse-stream",
+  "name": "sse-transform",
   "version": "1.0.0",
   "description": "A transform stream for converting JavaScript objects to Server-Sent Events.",
   "main": "index.js",

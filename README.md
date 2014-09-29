@@ -1,4 +1,4 @@
-sse-stream
+sse-transform
 ===========
 
 A transform stream for converting JavaScript objects or JSON streams into
@@ -15,7 +15,7 @@ to be parsed an error event is emitted on the stream and no transform is perform
 ```javascript
 'use strict';
 
-var sse = require('sse-stream');
+var sse = require('sse-transform');
 var through = require('through2');
 
 
@@ -63,7 +63,7 @@ non-string-literal is encountered, the value is JSON.stringified during transfor
 ```javascript
 'use strict';
 
-var sse = require('./');
+var sse = require('sse-transform');
 var through = require('through2');
 
 
@@ -110,7 +110,7 @@ data:{"foo":true,"bar":123,"baz":"foo\nbar"}
 
 #### Fields
 The JSON or JavaScript object written to the stream can contain any properties, but only the following will be consumed
-by sse-stream, any other being ignored.
+by `sse-transform`, any other being ignored.
 
 - `event` - An `event` can contain any character besides carriage return or line feed. If the value contains a carriage return or
 line feed, the value is split on that character and the first segment used as the value.
