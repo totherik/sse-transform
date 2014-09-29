@@ -10,11 +10,12 @@ module.exports = function sse(options) {
     options = options || {};
 
     if (options.objectMode) {
-        return stream = through(options, function (chunk, enc, next) {
+        stream = through(options, function (chunk, enc, next) {
             chunk = Transform.transform(chunk);
             stream.push(new Buffer(chunk));
             next();
         });
+        return stream;
     }
 
 
